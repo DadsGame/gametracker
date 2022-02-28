@@ -1,8 +1,14 @@
 package dadsgame.businessapi.entity;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "type")
 public class Type {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(columnDefinition = "serial")
   private long id;
   private String libelle;
 

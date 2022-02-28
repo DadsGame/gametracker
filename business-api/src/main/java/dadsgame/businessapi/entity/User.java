@@ -1,8 +1,14 @@
 package dadsgame.businessapi.entity;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "user")
 public class User {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(columnDefinition = "serial")
   private long id;
   private String name;
   private String firstname;

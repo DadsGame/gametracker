@@ -1,11 +1,9 @@
 package dadsgame.businessapi.entity;
 
-import org.hibernate.annotations.Table;
-
 import javax.persistence.*;
 
 @Entity
-@Table(appliesTo = "game")
+@Table(name = "game")
 public class Game {
 
   @Id
