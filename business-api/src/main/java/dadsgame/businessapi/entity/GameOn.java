@@ -1,5 +1,15 @@
 package dadsgame.businessapi.entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 
 @Entity
 @Table(name = "game_on")
@@ -9,34 +19,9 @@ public class GameOn {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
   private long id;
+  @Column(name = "id_game")
   private long idGame;
+  @Column(name = "id_platform")
   private long idPlatform;
-
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public long getIdGame() {
-    return idGame;
-  }
-
-  public void setIdGame(long idGame) {
-    this.idGame = idGame;
-  }
-
-
-  public long getIdPlatform() {
-    return idPlatform;
-  }
-
-  public void setIdPlatform(long idPlatform) {
-    this.idPlatform = idPlatform;
-  }
 
 }

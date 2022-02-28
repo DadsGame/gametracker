@@ -1,6 +1,17 @@
 package dadsgame.businessapi.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 
 @Entity
 @Table(name = "game")
@@ -16,58 +27,11 @@ public class Game {
   private String description;
   private double price;
 
+  @ManyToMany
+  @JoinTable(name = "game_on",
+          joinColumns = @JoinColumn(name = "id_game"),
+          inverseJoinColumns = @JoinColumn(name = "id_platform"))
+  private List<Platform> gameOn;
 
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-
-  public String getPublisher() {
-    return publisher;
-  }
-
-  public void setPublisher(String publisher) {
-    this.publisher = publisher;
-  }
-
-
-  public String getDeveloper() {
-    return developer;
-  }
-
-  public void setDeveloper(String developer) {
-    this.developer = developer;
-  }
-
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-
-  public double getPrice() {
-    return price;
-  }
-
-  public void setPrice(double price) {
-    this.price = price;
-  }
 
 }

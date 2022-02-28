@@ -1,6 +1,16 @@
 package dadsgame.businessapi.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 
 @Entity
 @Table(name = "game_type")
@@ -12,32 +22,5 @@ public class GameType {
   private long id;
   private long idGame;
   private long idType;
-
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public long getIdGame() {
-    return idGame;
-  }
-
-  public void setIdGame(long idGame) {
-    this.idGame = idGame;
-  }
-
-
-  public long getIdType() {
-    return idType;
-  }
-
-  public void setIdType(long idType) {
-    this.idType = idType;
-  }
 
 }

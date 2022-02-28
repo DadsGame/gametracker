@@ -1,6 +1,16 @@
 package dadsgame.businessapi.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 
 @Entity
 @Table(name = "platform")
@@ -11,23 +21,5 @@ public class Platform {
   @Column(columnDefinition = "serial")
   private long id;
   private String libelle;
-
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public String getLibelle() {
-    return libelle;
-  }
-
-  public void setLibelle(String libelle) {
-    this.libelle = libelle;
-  }
 
 }
