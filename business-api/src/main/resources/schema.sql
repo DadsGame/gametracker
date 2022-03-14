@@ -4,7 +4,6 @@ DROP TYPE IF EXISTS public.game_status CASCADE;
 DROP TABLE IF EXISTS public.type CASCADE;
 DROP TABLE IF EXISTS public.game_type CASCADE;
 DROP TABLE IF EXISTS public.platform CASCADE;
-DROP TABLE IF EXISTS public.game_on CASCADE;
 DROP TABLE IF EXISTS public.release_date CASCADE;
 DROP TABLE IF EXISTS public.user CASCADE;
 DROP TABLE IF EXISTS public.game_review CASCADE;
@@ -41,15 +40,10 @@ CREATE TABLE IF NOT EXISTS "platform" (
   "libelle" varchar
 );
 
-CREATE TABLE IF NOT EXISTS "game_on" (
-  "id" SERIAL PRIMARY KEY,
-  "id_game" int,
-  "id_platform" int
-);
-
 CREATE TABLE IF NOT EXISTS "release_date" (
   "id" SERIAL PRIMARY KEY,
-  "id_game_on" int,
+  "id_platform" int,
+  "id_game" int,
   "released_at" timestamp
 );
 
@@ -67,8 +61,8 @@ CREATE TABLE IF NOT EXISTS "user_library" (
   "id" SERIAL PRIMARY KEY,
   "id_user" int,
   "id_game" int,
-  "bought_at" float,
-  "on_wishilist" boolean,
+  "bought_at" integer,
+  "on_wishlist" boolean,
   "status" game_status,
   "created_at" timestamp,
   "playtime" int
@@ -86,11 +80,9 @@ ALTER TABLE "game_type" ADD FOREIGN KEY ("id_game") REFERENCES "game" ("id");
 
 ALTER TABLE "game_type" ADD FOREIGN KEY ("id_type") REFERENCES "type" ("id");
 
-ALTER TABLE "game_on" ADD FOREIGN KEY ("id_game") REFERENCES "game" ("id");
+ALTER TABLE "release_date" ADD FOREIGN KEY ("id_platform") REFERENCES "platform" ("id");
 
-ALTER TABLE "game_on" ADD FOREIGN KEY ("id_platform") REFERENCES "platform" ("id");
-
-ALTER TABLE "release_date" ADD FOREIGN KEY ("id_game_on") REFERENCES "game_on" ("id");
+ALTER TABLE "release_date" ADD FOREIGN KEY ("id_game") REFERENCES "game" ("id");
 
 ALTER TABLE "user_library" ADD FOREIGN KEY ("id_user") REFERENCES "user" ("id");
 

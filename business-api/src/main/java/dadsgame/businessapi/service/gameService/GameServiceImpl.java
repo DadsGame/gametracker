@@ -1,4 +1,4 @@
-package dadsgame.businessapi.service;
+package dadsgame.businessapi.service.gameService;
 
 import dadsgame.businessapi.entity.Game;
 import dadsgame.businessapi.repository.GameRepository;

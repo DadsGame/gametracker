@@ -1,5 +1,7 @@
 package dadsgame.businessapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,15 @@ public class ReleaseDate {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
   private long id;
-  private long idGameOn;
+  @Column(name = "released_at")
   private java.sql.Timestamp releasedAt;
+
+  @OneToOne
+  @JoinColumn(name = "id_platform", referencedColumnName = "id")
+  private Platform platform;
+
+  @JsonIgnore
+  @Column(name = "id_game")
+  private long gameRelease;
 
 }

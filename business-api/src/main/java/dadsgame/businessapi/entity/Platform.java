@@ -20,6 +20,7 @@ public class Platform {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
   private long id;
+  @Column(name = "libelle")
   private String libelle;
 
 }

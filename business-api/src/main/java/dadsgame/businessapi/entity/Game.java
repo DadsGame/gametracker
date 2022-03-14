@@ -1,5 +1,6 @@
 package dadsgame.businessapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,17 +22,17 @@ public class Game {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
   private long id;
+  @Column(name = "name")
   private String name;
+  @Column(name = "publisher")
   private String publisher;
+  @Column(name = "developer")
   private String developer;
+  @Column(name = "description")
   private String description;
+  @Column(name = "price")
   private double price;
-
-  @ManyToMany
-  @JoinTable(name = "game_on",
-          joinColumns = @JoinColumn(name = "id_game"),
-          inverseJoinColumns = @JoinColumn(name = "id_platform"))
-  private List<Platform> gameOn;
-
+  @OneToMany(mappedBy = "gameRelease")
+  private List<ReleaseDate> releaseDate;
 
 }
