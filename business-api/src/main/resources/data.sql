@@ -14,5 +14,5 @@ INSERT INTO release_date (id_game, id_platform, released_at) VALUES (1, 4, '2011
 INSERT INTO public.user (name, firstname, email, password, username, profile_picture) VALUES ('toyota', 'yaris', 'toyota@yaris.com', '123456', 'tomota', null);
 INSERT INTO public.user (name, firstname, email, password, username, profile_picture) VALUES ('tutur', 'elfuego', 'tutur@elfuego.com', '000000', 'tutur', null);
 
-INSERT INTO user_library (id_user, id_game, bought_at, on_wishlist, status, created_at, playtime) VALUES (1, 1, 10.92, false, 'started', '2019-11-11 19:10:25-07', 10);
-INSERT INTO user_library (id_user, id_game, bought_at, on_wishlist, status, created_at, playtime) VALUES (2, 1, 0, true, null, null, 0);
+INSERT INTO user_game (id_user, id_game, bought_at, on_wishlist, status, created_at, playtime) VALUES (1, 1, 10.92, false, 'started', '2019-11-11 19:10:25-07', 10);
+INSERT INTO user_wishlist (id_user, id_game) VALUES (2, 1);
