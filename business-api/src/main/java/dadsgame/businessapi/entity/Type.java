@@ -19,7 +19,7 @@ public class Type {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
+  private int id;
   private String libelle;
 
 }

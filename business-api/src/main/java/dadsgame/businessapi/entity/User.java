@@ -20,7 +20,7 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
+  private int id;
   @Column(name = "name")
   private String name;
   @Column(name = "firstname")
@@ -34,6 +34,6 @@ public class User {
   @Column(name = "profile_picture")
   private String profilePicture;
   @OneToMany(mappedBy = "userLibrary")
-  private List<UserLibrary> userLibrary;
+  private List<UserGame> userLibrary;
 
 }

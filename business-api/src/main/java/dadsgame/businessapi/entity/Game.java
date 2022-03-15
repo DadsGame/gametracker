@@ -21,7 +21,7 @@ public class Game {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
+  private int id;
   @Column(name = "name")
   private String name;
   @Column(name = "publisher")

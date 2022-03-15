@@ -19,7 +19,7 @@ public class Platform {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
+  private int id;
   @Column(name = "libelle")
   private String libelle;
 

@@ -21,7 +21,7 @@ public class ReleaseDate {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
+  private int id;
   @Column(name = "released_at")
   private java.sql.Timestamp releasedAt;
 
@@ -31,6 +31,6 @@ public class ReleaseDate {
 
   @JsonIgnore
   @Column(name = "id_game")
-  private long gameRelease;
+  private int gameRelease;
 
 }

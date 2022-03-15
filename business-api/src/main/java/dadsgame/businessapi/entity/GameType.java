@@ -19,8 +19,8 @@ public class GameType {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
-  private long idGame;
-  private long idType;
+  private int id;
+  private int idGame;
+  private int idType;
 
 }

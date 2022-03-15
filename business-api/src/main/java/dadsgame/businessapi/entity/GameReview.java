@@ -19,10 +19,10 @@ public class GameReview {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
-  private long idUser;
-  private long idGame;
-  private long rate;
+  private int id;
+  private int idUser;
+  private int idGame;
+  private int rate;
   private String review;
 
 }

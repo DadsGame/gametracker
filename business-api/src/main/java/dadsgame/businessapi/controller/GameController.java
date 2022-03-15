@@ -1,30 +1,30 @@
 package dadsgame.businessapi.controller;
 
 import dadsgame.businessapi.entity.Game;
-import dadsgame.businessapi.entity.User;
 import dadsgame.businessapi.service.gameService.GameService;
-import dadsgame.businessapi.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-public class HelloWorld {
+@RequestMapping(path = "/games")
+public class GameController {
 
     @Autowired
     GameService gameService;
 
-    @Autowired
-    UserService userService;
 
-    @GetMapping("/games")
+    @GetMapping
     public List<Game> getGames() {
         return gameService.getAllGame();
     }
 
-    @GetMapping("/users")
-    public List<User> getUsers() { return userService.getAllUser(); }
+    @GetMapping("/{idGame}")
+    public Optional<Game> getGameById(@PathVariable int idGame) { return gameService.getGameById(idGame); }
 
 }

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,16 +14,16 @@ import java.util.List;
 @Setter
 
 @Entity
-@Table(name = "user_library")
-public class UserLibrary {
+@Table(name = "user_game")
+public class UserGame {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(columnDefinition = "serial")
-  private long id;
+  private int id;
   @JsonIgnore
   @Column(name = "id_user")
-  private long userLibrary;
+  private int userLibrary;
   @OneToOne
   @JoinColumn(name = "id_game", referencedColumnName = "id")
   private Game game;
