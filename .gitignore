@@ -1,4 +1,7 @@
-# Compiled class file
+# Remove target
+business-api/target
+
+#Compiled class file
 *.class
 
 # Log file
