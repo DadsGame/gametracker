@@ -1,6 +1,6 @@
 package dadsgame.businessapi.controller;
 
-import dadsgame.businessapi.entity.User;
+import dadsgame.businessapi.entity.UserEntity;
 import dadsgame.businessapi.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,27 +21,27 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
-    public List<User> getAllUsers() { return userService.getAllUser(); }
+    public List<UserEntity> getAllUsers() { return userService.getAllUser(); }
 
     @PostMapping("/sign-up")
-    public ResponseEntity signUp(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userService.createUser(user);
+    public ResponseEntity signUp(@RequestBody UserEntity userEntity) {
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
+        userService.createUser(userEntity);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{idUser}")
-    public Optional<User> getUserById(@PathVariable int idUser) { return userService.getUserById(idUser); }
+    public Optional<UserEntity> getUserById(@PathVariable int idUser) { return userService.getUserById(idUser); }
 
     @PostMapping
-    public User createUser(@RequestBody User newUser){
-        return userService.createUser(newUser);
+    public UserEntity createUser(@RequestBody UserEntity newUserEntity){
+        return userService.createUser(newUserEntity);
     }
 
     @PutMapping("/{idUser}")
-    public ResponseEntity<User> updateUser(@RequestBody User user){
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity){
         try {
-            return new ResponseEntity<User>(userService.update(user), HttpStatus.OK);
+            return new ResponseEntity<UserEntity>(userService.update(userEntity), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

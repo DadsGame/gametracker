@@ -1,9 +1,10 @@
 package dadsgame.businessapi.service.userService;
 
-import dadsgame.businessapi.entity.User;
+import dadsgame.businessapi.entity.UserEntity;
 import dadsgame.businessapi.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Collections.emptyList;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -19,30 +23,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> getAllUser() {
+    public List<UserEntity> getAllUser() {
         return userRepository.findAll();
     }
 
     @Override
-    public Optional<User> getUserById(int idUser) {
+    public Optional<UserEntity> getUserById(int idUser) {
         return userRepository.findById(idUser);
     }
 
+
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserEntity createUser(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
 
     @Override
-    public User update(User user) {
-        return userRepository.save(user);
+    public UserEntity update(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Objects.requireNonNull(username);
-        User user = userRepository.findUserWithName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return user;
+        UserEntity user = userRepository.findUserWithName(username);
+        if(user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return new User(
+                user.getUsername(),
+                user.getPassword(),
+                emptyList()
+        );
     }
 }
