@@ -29,8 +29,6 @@ public class UserGame {
   private Game game;
   @Column(name = "bought_at")
   private double boughtAt;
-  @Column(name = "on_wishlist")
-  private boolean onWishlist;
   @Column(name = "status")
   private String status;
   @Column(name = "created_at")

@@ -5,6 +5,7 @@ import dadsgame.businessapi.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,18 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
     public List<User> getAllUsers() { return userService.getAllUser(); }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity signUp(@RequestBody User user) {
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userService.createUser(user);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
 
     @GetMapping("/{idUser}")
     public Optional<User> getUserById(@PathVariable int idUser) { return userService.getUserById(idUser); }

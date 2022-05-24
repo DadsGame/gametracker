@@ -54,11 +54,9 @@ CREATE TABLE IF NOT EXISTS "release_date" (
 
 CREATE TABLE IF NOT EXISTS "user" (
   "id" SERIAL PRIMARY KEY,
-  "name" varchar,
-  "firstname" varchar,
   "email" varchar NOT NULL,
   "password" varchar NOT NULL,
-  "username" varchar,
+  "username" varchar UNIQUE NOT NULL,
   "profile_picture" varchar
 );
 
@@ -67,7 +65,6 @@ CREATE TABLE IF NOT EXISTS "user_game" (
   "id_user" int,
   "id_game" int,
   "bought_at" integer,
-  "on_wishlist" boolean,
   "status" game_status,
   "created_at" timestamp,
   "playtime" int
