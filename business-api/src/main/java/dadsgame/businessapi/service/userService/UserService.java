@@ -13,5 +13,7 @@ public interface UserService extends UserDetailsService {
 
     UserEntity createUser(UserEntity userEntity);
 
+    UserEntity findByUserName(String username);
+
     UserEntity update(UserEntity userEntity);
 }

@@ -1,13 +1,19 @@
 package dadsgame.businessapi.controller;
 
+import dadsgame.businessapi.entity.EmptyJsonResponse;
 import dadsgame.businessapi.entity.Game;
+import dadsgame.businessapi.entity.UserEntity;
+import dadsgame.businessapi.entity.UserGame;
 import dadsgame.businessapi.service.gameService.GameService;
+import dadsgame.businessapi.service.gameService.UserGameService;
+import dadsgame.businessapi.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +23,10 @@ public class GameController {
 
     @Autowired
     GameService gameService;
+    @Autowired
+    UserGameService userGameService;
+    @Autowired
+    UserService userService;
 
 
     @GetMapping
@@ -26,5 +36,47 @@ public class GameController {
 
     @GetMapping("/{idGame}")
     public Optional<Game> getGameById(@PathVariable int idGame) { return gameService.getGameById(idGame); }
+
+    @GetMapping("/byGameName")
+    public ResponseEntity getGameByName(@RequestParam("name") String gameName) {
+        Game g = gameService.findGameByName(gameName);
+        if(g == null ||gameName == null|| gameName.isEmpty()) {
+        return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(g, HttpStatus.OK);
+    }
+    @GetMapping("/byIgdb")
+    public ResponseEntity getGameByIgdbId(@RequestParam("id") String igdbId) {
+        Game g = gameService.findGameByIgdbId(igdbId);
+        if(g == null || igdbId == null || igdbId.isEmpty()) {
+            return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(g, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public Game postGame(@RequestBody @Valid Game game) {
+        return gameService.save(game);
+    }
+
+    @PostMapping("/toLibrary")
+    public UserGame postGameToLibrary(@RequestBody @Valid UserGame userGame) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        userGame.setUserLibrary(userId);
+        return userGameService.save(userGame);
+    }
+
+    @GetMapping("/userLibrary")
+    public List<UserGame> getLibraryFromUser() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        List<UserGame> userGameList =  userGameService.getLibrary(userId);
+        if(userGameList == null) return List.of();
+        return userGameList;
+    }
+
 
 }

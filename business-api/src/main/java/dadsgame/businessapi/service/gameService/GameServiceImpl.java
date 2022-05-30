@@ -22,4 +22,18 @@ public class GameServiceImpl implements GameService {
     public Optional<Game> getGameById(int idGame) {
         return gameRepository.findById(idGame);
     }
+
+    @Override
+    public Game findGameByName(String gameName) {
+        return gameRepository.findGameByName(gameName);
+    }
+
+    @Override
+    public Game findGameByIgdbId(String igdbId) {
+        return gameRepository.findGameByIgdbId(igdbId);
+    }
+    @Override
+    public Game save(Game game) {
+        return gameRepository.save(game);
+    }
 }

@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public UserEntity findByUserName(String username) {
+        return userRepository.findUserWithName(username);
+    }
+
+    @Override
     public UserEntity update(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }

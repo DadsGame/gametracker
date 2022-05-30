@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS "game" (
   "publisher" varchar,
   "developer" varchar,
   "description" varchar,
+  "igdb_id" varchar,
   "price" float
 );
 
@@ -64,8 +65,9 @@ CREATE TABLE IF NOT EXISTS "user_game" (
   "id" SERIAL PRIMARY KEY,
   "id_user" int,
   "id_game" int,
-  "bought_at" integer,
-  "status" game_status,
+  "bought_at" int,
+  "sold_at" int,
+  "status" varchar,
   "created_at" timestamp,
   "playtime" int
 );
