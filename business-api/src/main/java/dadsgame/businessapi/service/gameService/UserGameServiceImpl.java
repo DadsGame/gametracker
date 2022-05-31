@@ -7,7 +7,9 @@ import dadsgame.businessapi.repository.UserGameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -22,7 +24,12 @@ public class UserGameServiceImpl implements UserGameService {
     }
 
     @Override
-    public List<UserGame> getLibrary(int userId) {
-        return userGameRepository.findByUserLibraryEquals(userId);
+    public  List<Map<String, Object>> getLibrary(int userId) {
+        return userGameRepository.findByUserLibrary(userId);
+    }
+
+    @Override
+    public  List<Map<String, Object>> getGlobalLibrary() {
+       return ( List<Map<String, Object>>) userGameRepository.getLibraryGlobal();
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -69,13 +70,26 @@ public class GameController {
     }
 
     @GetMapping("/userLibrary")
-    public List<UserGame> getLibraryFromUser() {
+    public List<Map<String, Object>> getLibraryFromUser() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserEntity userLogged = userService.findByUserName(username);
         int userId = userLogged.getId();
-        List<UserGame> userGameList =  userGameService.getLibrary(userId);
-        if(userGameList == null) return List.of();
+        List<Map<String, Object>> userGameList =  userGameService.getLibrary(userId);
+        if(userGameList == null || userGameList.isEmpty()) return List.of();
         return userGameList;
+    }
+
+    @GetMapping("/stats/global")
+    public List<Map<String, Object>> getGlobalStats() {
+        return userGameService.getGlobalLibrary();
+    }
+
+    @GetMapping("/stats/user")
+    public ResponseEntity getUserStats() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
     }
 
 

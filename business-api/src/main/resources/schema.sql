@@ -14,10 +14,11 @@ DROP TABLE IF EXISTS post CASCADE;
 DROP TABLE IF EXISTS game_topic CASCADE;
 
 CREATE TYPE "game_status" AS ENUM (
-  'not_started',
+  'not started',
   'started',
   'finished',
-  'ragequit'
+  'ragequit',
+  'won''t continue'
 );
 
 CREATE TABLE IF NOT EXISTS "game" (
