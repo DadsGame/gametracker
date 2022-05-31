@@ -24,13 +24,12 @@ public class UserGame {
   @JsonIgnore
   @Column(name = "id_user")
   private int userLibrary;
-  @OneToOne
-  @JoinColumn(name = "id_game", referencedColumnName = "id")
-  private Game game;
+  @Column(name = "id_game")
+  private int idGame;
   @Column(name = "bought_at")
   private double boughtAt;
-  @Column(name = "on_wishlist")
-  private boolean onWishlist;
+  @Column(name = "sold_at")
+  private double soldAt;
   @Column(name = "status")
   private String status;
   @Column(name = "created_at")

@@ -9,10 +9,6 @@ DROP TABLE IF EXISTS public.user CASCADE;
 DROP TABLE IF EXISTS public.game_review CASCADE;
 DROP TABLE IF EXISTS public.user_wishlist CASCADE;
 
-DROP TABLE IF EXISTS comment CASCADE;
-DROP TABLE IF EXISTS post CASCADE;
-DROP TABLE IF EXISTS game_topic CASCADE;
-
 CREATE TYPE "game_status" AS ENUM (
   'not_started',
   'started',
@@ -26,7 +22,6 @@ CREATE TABLE IF NOT EXISTS "game" (
   "publisher" varchar,
   "developer" varchar,
   "description" varchar,
-  "igdb_id" varchar,
   "price" float
 );
 
@@ -65,9 +60,8 @@ CREATE TABLE IF NOT EXISTS "user_game" (
   "id" SERIAL PRIMARY KEY,
   "id_user" int,
   "id_game" int,
-  "bought_at" int,
-  "sold_at" int,
-  "status" varchar,
+  "bought_at" integer,
+  "status" game_status,
   "created_at" timestamp,
   "playtime" int
 );
@@ -84,29 +78,6 @@ CREATE TABLE IF NOT EXISTS "user_wishlist" (
     "id" SERIAL PRIMARY KEY,
     "id_user" int,
     "id_game" int
-);
-
-CREATE TABLE game_topic
-(
-    "id"   int PRIMARY KEY,
-    "name" varchar
-);
-
-CREATE TABLE post
-(
-    "id" SERIAL PRIMARY KEY,
-    "title" varchar,
-    "author"  varchar,
-    "content" varchar,
-    "id_gametopic" int
-);
-
-CREATE TABLE comment
-(
-    "id"      SERIAL PRIMARY KEY,
-    "author"  varchar,
-    "content" varchar,
-    "id_post" int
 );
 
 ALTER TABLE "user_wishlist" ADD FOREIGN KEY ("id_user") REFERENCES "user" ("id");
@@ -128,7 +99,3 @@ ALTER TABLE "user_game" ADD FOREIGN KEY ("id_game") REFERENCES "game" ("id");
 ALTER TABLE "game_review" ADD FOREIGN KEY ("id_user") REFERENCES "user" ("id");
 
 ALTER TABLE "game_review" ADD FOREIGN KEY ("id_game") REFERENCES "game" ("id");
-
-ALTER TABLE comment ADD FOREIGN KEY ("id_post") REFERENCES post ("id");
-
-ALTER TABLE post ADD FOREIGN KEY ("id_gametopic") REFERENCES game_topic ("id");

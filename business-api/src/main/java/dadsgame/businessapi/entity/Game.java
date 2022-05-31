@@ -32,6 +32,8 @@ public class Game {
   private String description;
   @Column(name = "price")
   private double price;
+  @Column(name = "igdb_id")
+  private String igdbId;
   @OneToMany(mappedBy = "gameRelease")
   private List<ReleaseDate> releaseDate;
 
