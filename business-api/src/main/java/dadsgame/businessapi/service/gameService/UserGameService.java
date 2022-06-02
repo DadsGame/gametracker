@@ -1,5 +1,6 @@
 package dadsgame.businessapi.service.gameService;
 
+import dadsgame.businessapi.entity.GameReview;
 import dadsgame.businessapi.entity.UserGame;
 
 import java.util.List;
@@ -14,5 +15,8 @@ public interface UserGameService {
     List<Map<String, Object>> getGlobalLibrary();
     List<Map<String, Object>> getUserLibrary(int userId);
 
+    GameReview addReview(GameReview gameReview);
 
+
+    List<Map<String, Object>> getReviewByGame(Integer gameId);
 }
