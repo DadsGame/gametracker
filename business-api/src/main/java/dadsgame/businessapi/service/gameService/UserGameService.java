@@ -12,6 +12,7 @@ public interface UserGameService {
     List<Map<String, Object>> getLibrary(int userId);
 
     List<Map<String, Object>> getGlobalLibrary();
+    List<Map<String, Object>> getUserLibrary(int userId);
 
 
 }

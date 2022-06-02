@@ -85,11 +85,11 @@ public class GameController {
     }
 
     @GetMapping("/stats/user")
-    public ResponseEntity getUserStats() {
+    public List<Map<String, Object>> getUserStats() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserEntity userLogged = userService.findByUserName(username);
         int userId = userLogged.getId();
-        return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
+        return userGameService.getUserLibrary(userId);
     }
 
 

@@ -30,6 +30,11 @@ public class UserGameServiceImpl implements UserGameService {
 
     @Override
     public  List<Map<String, Object>> getGlobalLibrary() {
-       return ( List<Map<String, Object>>) userGameRepository.getLibraryGlobal();
+       return ( List<Map<String, Object>>) userGameRepository.getStatsLibraryGlobal();
+    }
+
+    @Override
+    public List<Map<String, Object>> getUserLibrary(int userId) {
+        return ( List<Map<String, Object>>) userGameRepository.getStatsLibraryUser(userId);
     }
 }

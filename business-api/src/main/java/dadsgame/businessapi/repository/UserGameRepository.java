@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface UserGameRepository extends JpaRepository<UserGame, Integer> {
 
-    @Query(value = "select id_user, id_game, bought_at, status, playtime, name, igdb_id from user_game join game g on user_game.id_game = g.id where user_game.id_user = ?1", nativeQuery = true)
+    @Query(value = "select id_user, id_game, bought_at, sold_at, status, playtime, name, igdb_id from user_game join game g on user_game.id_game = g.id where user_game.id_user = ?1", nativeQuery = true)
     List<Map<String, Object>> findByUserLibrary(int userLibrary);
 
     @Query(value = "select  status as most_present_status,\n" +
@@ -20,6 +20,14 @@ public interface UserGameRepository extends JpaRepository<UserGame, Integer> {
             "       (select sum(bought_at) from user_game) as total_spent_players,\n" +
             "       (select sum(sold_at) from user_game) as total_revenue_players\n" +
             "from user_game group by status order by count(*) desc limit 1;", nativeQuery = true)
-    List<Map<String, Object>> getLibraryGlobal();
+    List<Map<String, Object>> getStatsLibraryGlobal();
+    @Query(value = "select  status as most_present_status,\n" +
+            "       (select count(*) from user_game where id_user = ?1) as total_game,\n" +
+            "       (select avg(bought_at) from user_game where id_user = ?1) as avg_spent,\n" +
+            "       (select avg(sold_at) from user_game where id_user = ?1) as avg_revenue,\n" +
+            "       (select sum(bought_at) from user_game where id_user = ?1) as total_spent_player,\n" +
+            "       (select sum(sold_at) from user_game where id_user = ?1) as total_revenue_player\n" +
+            " from user_game where id_user = ?1 group by status order by count(*) desc limit 1;", nativeQuery = true)
+    List<Map<String, Object>> getStatsLibraryUser(int userId);
 
 }
