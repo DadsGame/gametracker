@@ -21,6 +21,14 @@ public class UserGameServiceImpl implements UserGameService {
 
     @Override
     public UserGame save(UserGame userGame) {
+        Optional<UserGame> ug = userGameRepository.findByUserLibraryAndIdGame(userGame.getUserLibrary(), userGame.getIdGame());
+        if (ug.isPresent()) {
+            ug.get().setPlaytime(userGame.getPlaytime());
+            ug.get().setBoughtAt(userGame.getBoughtAt());
+            ug.get().setSoldAt(userGame.getSoldAt());
+            ug.get().setStatus(userGame.getStatus());
+            return userGameRepository.save(ug.get());
+        }
         return userGameRepository.save(userGame);
     }
 

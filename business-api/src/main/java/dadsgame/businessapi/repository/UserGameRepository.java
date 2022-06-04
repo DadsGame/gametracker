@@ -1,12 +1,12 @@
 package dadsgame.businessapi.repository;
 
 import dadsgame.businessapi.entity.UserGame;
-import org.hibernate.query.NativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface UserGameRepository extends JpaRepository<UserGame, Integer> {
 
@@ -30,4 +30,5 @@ public interface UserGameRepository extends JpaRepository<UserGame, Integer> {
             " from user_game where id_user = ?1 group by status order by count(*) desc limit 1;", nativeQuery = true)
     List<Map<String, Object>> getStatsLibraryUser(int userId);
 
+    Optional<UserGame> findByUserLibraryAndIdGame(int userLibrary, int idGame);
 }
