@@ -1,13 +1,12 @@
 package dadsgame.businessapi.service.gameService;
 
-import dadsgame.businessapi.entity.Game;
+import dadsgame.businessapi.entity.GameReview;
 import dadsgame.businessapi.entity.UserGame;
-import dadsgame.businessapi.repository.GameRepository;
+import dadsgame.businessapi.repository.GameReviewRepository;
 import dadsgame.businessapi.repository.UserGameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,10 +15,20 @@ import java.util.Optional;
 public class UserGameServiceImpl implements UserGameService {
     @Autowired
     UserGameRepository userGameRepository;
+    @Autowired
+    GameReviewRepository gameReviewRepository;
 
 
     @Override
     public UserGame save(UserGame userGame) {
+        UserGame ug = userGameRepository.findByIdGameEqualsAndUserLibraryEquals(userGame.getIdGame(), userGame.getUserLibrary());
+        if (ug != null) {
+            ug.setPlaytime(userGame.getPlaytime());
+            ug.setBoughtAt(userGame.getBoughtAt());
+            ug.setSoldAt(userGame.getSoldAt());
+            ug.setStatus(userGame.getStatus());
+            return userGameRepository.save(ug);
+        }
         return userGameRepository.save(userGame);
     }
 
@@ -53,5 +62,21 @@ public class UserGameServiceImpl implements UserGameService {
         foundUserGame.setStatus(userGame.getStatus());
 
         return userGameRepository.save(foundUserGame);
+    }
+
+    @Override
+    public GameReview addReview(GameReview gameReview) {
+        Optional<GameReview> review = gameReviewRepository.findByIdUserAndIdGame(gameReview.getIdUser(), gameReview.getIdGame());
+        if (review.isPresent()) {
+            review.get().setRate(gameReview.getRate());
+            review.get().setReview(gameReview.getReview());
+            return gameReviewRepository.save(review.get());
+        }
+        return gameReviewRepository.save(gameReview);
+    }
+
+    @Override
+    public List<Map<String, Object>> getReviewByGame(Integer gameId) {
+        return gameReviewRepository.findAllReviewByGameId(gameId);
     }
 }

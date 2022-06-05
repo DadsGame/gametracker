@@ -1,9 +1,6 @@
 package dadsgame.businessapi.controller;
 
-import dadsgame.businessapi.entity.EmptyJsonResponse;
-import dadsgame.businessapi.entity.Game;
-import dadsgame.businessapi.entity.UserEntity;
-import dadsgame.businessapi.entity.UserGame;
+import dadsgame.businessapi.entity.*;
 import dadsgame.businessapi.service.gameService.GameService;
 import dadsgame.businessapi.service.gameService.UserGameService;
 import dadsgame.businessapi.service.userService.UserService;
@@ -114,5 +111,14 @@ public class GameController {
         return userGameService.getUserLibrary(userId);
     }
 
+    @PostMapping("/addReview")
+    public GameReview postGrameReview(@RequestBody @Valid GameReview gameReview) {
+        return userGameService.addReview(gameReview);
+    }
 
+    @GetMapping("review")
+    public List<Map<String, Object>> getGameReview(@RequestParam("idGame") Integer gameId) {
+        List<Map<String, Object>> gameReviewList = userGameService.getReviewByGame(gameId);
+        return gameReviewList;
+    }
 }

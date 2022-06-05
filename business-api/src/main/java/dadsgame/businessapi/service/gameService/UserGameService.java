@@ -1,5 +1,6 @@
 package dadsgame.businessapi.service.gameService;
 
+import dadsgame.businessapi.entity.GameReview;
 import dadsgame.businessapi.entity.UserGame;
 
 import java.util.List;
@@ -15,6 +16,9 @@ public interface UserGameService {
     List<Map<String, Object>> getUserLibrary(int userId);
 
     List<Map<String, Object>> checkIfPresentInLibrary(int userId, int gameId);
+    GameReview addReview(GameReview gameReview);
 
     UserGame update(UserGame userGame);
+
+    List<Map<String, Object>> getReviewByGame(Integer gameId);
 }
