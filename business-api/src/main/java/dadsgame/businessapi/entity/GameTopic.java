@@ -11,12 +11,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="game_topic")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name="game_topic")
 public class GameTopic {
 
     @Id

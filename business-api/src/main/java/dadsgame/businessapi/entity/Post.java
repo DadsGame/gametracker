@@ -8,13 +8,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "post")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Setter
+@Table(name = "post")
 public class Post {
 
     @Id

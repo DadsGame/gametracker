@@ -78,6 +78,28 @@ public class GameController {
         if(userGameList == null || userGameList.isEmpty()) return List.of();
         return userGameList;
     }
+    @GetMapping("/userLibrary/isPresent/{gameId}")
+    public List<Map<String, Object>> getGamePresentInLibrary(@PathVariable int gameId) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        List<Map<String, Object>> userGameList =  userGameService.checkIfPresentInLibrary(userId, gameId);
+        if(userGameList == null || userGameList.isEmpty()) return List.of();
+        return userGameList;
+    }
+
+    @PutMapping("/userLibrary")
+    public ResponseEntity<UserGame> updateUser(@RequestBody UserGame userGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        userGame.setUserLibrary(userId);
+        try {
+            return new ResponseEntity<UserGame>(userGameService.update(userGame), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/stats/global")
     public List<Map<String, Object>> getGlobalStats() {

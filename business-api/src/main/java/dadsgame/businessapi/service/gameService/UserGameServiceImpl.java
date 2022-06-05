@@ -37,4 +37,21 @@ public class UserGameServiceImpl implements UserGameService {
     public List<Map<String, Object>> getUserLibrary(int userId) {
         return ( List<Map<String, Object>>) userGameRepository.getStatsLibraryUser(userId);
     }
+
+    @Override
+    public List<Map<String, Object>> checkIfPresentInLibrary(int userId, int gameId) {
+        return userGameRepository.checkIfPresentInLibrary(userId, gameId);
+    }
+
+    @Override
+    public UserGame update(UserGame userGame) {
+        UserGame foundUserGame = userGameRepository.findByIdGameEqualsAndUserLibraryEquals(userGame.getIdGame(), userGame.getUserLibrary());
+
+        foundUserGame.setPlaytime(userGame.getPlaytime());
+        foundUserGame.setBoughtAt(userGame.getBoughtAt());
+        foundUserGame.setSoldAt(userGame.getSoldAt());
+        foundUserGame.setStatus(userGame.getStatus());
+
+        return userGameRepository.save(foundUserGame);
+    }
 }

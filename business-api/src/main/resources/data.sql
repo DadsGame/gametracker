@@ -17,6 +17,6 @@ INSERT INTO public.user (email, password, username, profile_picture) VALUES ('tu
 INSERT INTO user_game (id_user, id_game, bought_at, status, created_at, playtime) VALUES (1, 1, 10.92, 'started', '2019-11-11 19:10:25-07', 10);
 INSERT INTO user_wishlist (id_user, id_game) VALUES (2, 1);
 
-INSERT INTO game_topic (id, name) values (1, 'Counter Strike');
-INSERT INTO post (id_gametopic, author, title, content) values (1, 'John Doe', 'Here is the title', 'Here is my content');
-INSERT INTO comment (id_post, author, content) values (1, 'Foo Doe', 'Here is my content answer');
+INSERT INTO "game_topic" (id, name) values (1, 'Counter Strike');
+INSERT INTO "post" (id_gametopic, author, title, content) values (1, 'John Doe', 'Here is the title', 'Here is my content');
+INSERT INTO "comment" (id_post, author, content) values (1, 'Foo Doe', 'Here is my content answer');

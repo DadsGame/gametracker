@@ -14,5 +14,7 @@ public interface UserGameService {
     List<Map<String, Object>> getGlobalLibrary();
     List<Map<String, Object>> getUserLibrary(int userId);
 
+    List<Map<String, Object>> checkIfPresentInLibrary(int userId, int gameId);
 
+    UserGame update(UserGame userGame);
 }
