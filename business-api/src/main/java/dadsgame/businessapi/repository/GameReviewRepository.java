@@ -13,4 +13,7 @@ public interface GameReviewRepository extends JpaRepository<GameReview, Integer>
 
     @Query(value = "select username, rate, review from game_review g join \"user\" u on g.id_user = u.id where g.id_game = ?1", nativeQuery = true)
     List<Map<String, Object>> findAllReviewByGameId(Integer gameId);
+
+    @Query(value = "select username, rate, review from game_review gr join \"user\" u on gr.id_user = u.id join game g on gr.id_game=g.id where g.igdb_id = ?1", nativeQuery = true)
+    List<Map<String, Object>> findAllReviewByGameIgdbId(String gameId);
 }

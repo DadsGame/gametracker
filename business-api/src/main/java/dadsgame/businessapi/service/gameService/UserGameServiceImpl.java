@@ -1,11 +1,15 @@
 package dadsgame.businessapi.service.gameService;
 
+import dadsgame.businessapi.entity.Game;
 import dadsgame.businessapi.entity.GameReview;
 import dadsgame.businessapi.entity.UserGame;
+import dadsgame.businessapi.entity.UserWishlist;
 import dadsgame.businessapi.repository.GameReviewRepository;
 import dadsgame.businessapi.repository.UserGameRepository;
+import dadsgame.businessapi.repository.UserWishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,10 @@ public class UserGameServiceImpl implements UserGameService {
     UserGameRepository userGameRepository;
     @Autowired
     GameReviewRepository gameReviewRepository;
+    @Autowired
+    UserWishlistRepository userWishlistRepository;
+    @Autowired
+    GameService gameService;
 
 
     @Override
@@ -78,5 +86,35 @@ public class UserGameServiceImpl implements UserGameService {
     @Override
     public List<Map<String, Object>> getReviewByGame(Integer gameId) {
         return gameReviewRepository.findAllReviewByGameId(gameId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getReviewByGameIgdb(String gameId) {
+        return gameReviewRepository.findAllReviewByGameIgdbId(gameId);
+    }
+
+    @Override
+    public boolean isWishedByUser(int userId, int idGame) {
+        Optional<UserWishlist> wishlist = userWishlistRepository.findByIdUserAndIdGame(userId, idGame);
+        return wishlist.isPresent();
+    }
+
+    @Override
+    public UserWishlist postGameToWishList(UserWishlist userWishlist) {
+        if (isWishedByUser(userWishlist.getIdUser(), userWishlist.getIdGame())) {
+            return userWishlist;
+        }
+        return userWishlistRepository.save(userWishlist);
+    }
+
+    @Transactional
+    @Override
+    public Integer deleteWish(int userId, int idGame) {
+        return userWishlistRepository.deleteByIdUserAndIdGame(userId, idGame);
+    }
+
+    @Override
+    public List<Map<String, Object>> getWishList(int userId) {
+        return userWishlistRepository.getUserWishList(userId);
     }
 }
