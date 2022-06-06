@@ -47,4 +47,9 @@ public class GameServiceImpl implements GameService {
     public List<Map<String, Object>> getMostFinished() {
         return gameRepository.findByMostFinished();
     }
+
+    @Override
+    public List<Map<String, Object>> getAveragePlaytime() {
+        return gameRepository.findByAveragePlaytime();
+    }
 }

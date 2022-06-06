@@ -173,4 +173,9 @@ public class GameController {
         return gameService.getMostFinished();
     }
 
+    @GetMapping("/averagePlaytime")
+    public List<Map<String, Object>> getAveragePlaytime() {
+        return gameService.getAveragePlaytime();
+    }
+
 }
