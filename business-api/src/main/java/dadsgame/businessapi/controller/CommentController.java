@@ -30,7 +30,7 @@ public class CommentController {
     }
     @PostMapping("/currentUser")
     public Comment createCommentCurrent(@RequestBody @Valid Comment comment) {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         comment.setAuthor(username);
         return commentService.save(comment);
     }
