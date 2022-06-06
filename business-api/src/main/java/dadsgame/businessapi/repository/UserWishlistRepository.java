@@ -13,6 +13,6 @@ public interface UserWishlistRepository extends JpaRepository<UserWishlist, Inte
 
     Integer deleteByIdUserAndIdGame(int userId, int idGame);
 
-    @Query(value = "select g.id, g.name, g.igdb_id from game g join user_wishlist u join g.id = u.id_game where u.id_user = ?1",nativeQuery = true)
+    @Query(value = "select g.id, g.name, g.igdb_id from game g join user_wishlist u on g.id = u.id_game where u.id_user = ?1",nativeQuery = true)
     List<Map<String, Object>> getUserWishList(int userId);
 }
