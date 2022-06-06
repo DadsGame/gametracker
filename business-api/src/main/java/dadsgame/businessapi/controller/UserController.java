@@ -6,6 +6,7 @@ import dadsgame.businessapi.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,12 @@ public class UserController {
 
     @GetMapping("/{idUser}")
     public Optional<UserEntity> getUserById(@PathVariable int idUser) { return userService.getUserById(idUser); }
+
+    @GetMapping("/profile")
+    public UserEntity getProfile() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByUserName(username);
+    }
 
     @PutMapping("/{idUser}")
     public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity){
