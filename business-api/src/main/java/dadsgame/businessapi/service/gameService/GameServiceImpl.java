@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,5 +36,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game save(Game game) {
         return gameRepository.save(game);
+    }
+
+    @Override
+    public List<Map<String, Object>> getBestRate() {
+        return gameRepository.findByBestRate();
     }
 }

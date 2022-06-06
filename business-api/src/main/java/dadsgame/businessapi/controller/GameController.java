@@ -121,4 +121,51 @@ public class GameController {
         List<Map<String, Object>> gameReviewList = userGameService.getReviewByGame(gameId);
         return gameReviewList;
     }
+    @GetMapping("reviewIgdb")
+    public List<Map<String, Object>> getGameReviewByIgdb(@RequestParam("idGame") String gameId) {
+        List<Map<String, Object>> gameReviewList = userGameService.getReviewByGameIgdb(gameId);
+        return gameReviewList;
+    }
+
+    @GetMapping("bestRating")
+    public List<Map<String, Object>> getBestRating() {
+        List<Map<String, Object>> gameBestRateList = gameService.getBestRate();
+        return gameBestRateList;
+    }
+
+    @GetMapping("{idGame}/isWished")
+    public boolean isWishedByUser(@PathVariable int idGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        Game g = gameService.findGameByIgdbId(String.valueOf(idGame));
+        return userGameService.isWishedByUser(userId, g.getId());
+    }
+
+    @PostMapping("addToWishlist/{idGame}")
+    public UserWishlist postWishList(@PathVariable int idGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        Game g = gameService.findGameByIgdbId(String.valueOf(idGame));
+        UserWishlist uw = new UserWishlist(userId, g.getId());
+        return userGameService.postGameToWishList(uw);
+    }
+    @DeleteMapping("/userWishlist/{idGame}")
+    public Integer deleteWish(@PathVariable int idGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        Game g = gameService.findGameByIgdbId(String.valueOf(idGame));
+        return userGameService.deleteWish(userId, g.getId());
+    }
+
+    @GetMapping("/wishlist")
+    public List<Map<String, Object>> getWishList(){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        return userGameService.getWishList(userId);
+    }
+
 }

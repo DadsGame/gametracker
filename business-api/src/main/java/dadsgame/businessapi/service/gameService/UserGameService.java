@@ -2,6 +2,7 @@ package dadsgame.businessapi.service.gameService;
 
 import dadsgame.businessapi.entity.GameReview;
 import dadsgame.businessapi.entity.UserGame;
+import dadsgame.businessapi.entity.UserWishlist;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,14 @@ public interface UserGameService {
     UserGame update(UserGame userGame);
 
     List<Map<String, Object>> getReviewByGame(Integer gameId);
+
+    List<Map<String, Object>> getReviewByGameIgdb(String gameId);
+
+    boolean isWishedByUser(int userId, int idGame);
+
+    UserWishlist postGameToWishList(UserWishlist userWishlist);
+
+    Integer deleteWish(int userId, int idGame);
+
+    List<Map<String, Object>> getWishList(int userId);
 }
