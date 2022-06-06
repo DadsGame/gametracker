@@ -42,4 +42,9 @@ public class GameServiceImpl implements GameService {
     public List<Map<String, Object>> getBestRate() {
         return gameRepository.findByBestRate();
     }
+
+    @Override
+    public List<Map<String, Object>> getMostFinished() {
+        return gameRepository.findByMostFinished();
+    }
 }

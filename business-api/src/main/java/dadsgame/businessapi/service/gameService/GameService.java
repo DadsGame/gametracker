@@ -16,4 +16,6 @@ public interface GameService {
     Game save(Game game);
 
     List<Map<String, Object>> getBestRate();
+
+    List<Map<String, Object>> getMostFinished();
 }

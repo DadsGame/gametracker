@@ -168,4 +168,9 @@ public class GameController {
         return userGameService.getWishList(userId);
     }
 
+    @GetMapping("/mostFinished")
+    public List<Map<String, Object>> getMostFinished() {
+        return gameService.getMostFinished();
+    }
+
 }
