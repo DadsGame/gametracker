@@ -31,6 +31,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/stats/global").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/bestRating").permitAll()
+                .antMatchers(HttpMethod.GET, "/games/averagePlaytime").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/{idGame}").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/review").permitAll()
                 .antMatchers(HttpMethod.GET, "/games/reviewIgdb").permitAll()

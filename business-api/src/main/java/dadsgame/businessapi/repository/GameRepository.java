@@ -22,4 +22,8 @@ public interface GameRepository extends JpaRepository<Game, Integer> {
 
     @Query(value = "select g.id, g.igdb_id, name, t.sm as sm from (select id_game, COUNT(id_game) as sm from user_game where status='finished' group by id_game) t join game g on g.id = t.id_game order by t.sm DESC LIMIT 10",nativeQuery = true)
     List<Map<String, Object>> findByMostFinished();
+    @Query(value = "select name, igdb_id, avg(playtime) as avg_playtime from game join user_game ug on game.id = ug.id_game group by name, igdb_id order by avg_playtime desc limit 10", nativeQuery = true)
+    List<Map<String, Object>> findByAveragePlaytime();
+
+
 }
