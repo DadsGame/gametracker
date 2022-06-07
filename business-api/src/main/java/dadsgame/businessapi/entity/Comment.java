@@ -2,20 +2,16 @@ package dadsgame.businessapi.entity;
 
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="comment")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Setter
-
+@Table(name="comment")
 public class Comment {
 
     @Id

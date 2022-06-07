@@ -1,9 +1,6 @@
 package dadsgame.businessapi.controller;
 
-import dadsgame.businessapi.entity.EmptyJsonResponse;
-import dadsgame.businessapi.entity.Game;
-import dadsgame.businessapi.entity.UserEntity;
-import dadsgame.businessapi.entity.UserGame;
+import dadsgame.businessapi.entity.*;
 import dadsgame.businessapi.service.gameService.GameService;
 import dadsgame.businessapi.service.gameService.UserGameService;
 import dadsgame.businessapi.service.userService.UserService;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -69,14 +67,115 @@ public class GameController {
     }
 
     @GetMapping("/userLibrary")
-    public List<UserGame> getLibraryFromUser() {
+    public List<Map<String, Object>> getLibraryFromUser() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserEntity userLogged = userService.findByUserName(username);
         int userId = userLogged.getId();
-        List<UserGame> userGameList =  userGameService.getLibrary(userId);
-        if(userGameList == null) return List.of();
+        List<Map<String, Object>> userGameList =  userGameService.getLibrary(userId);
+        if(userGameList == null || userGameList.isEmpty()) return List.of();
+        return userGameList;
+    }
+    @GetMapping("/userLibrary/isPresent/{gameId}")
+    public List<Map<String, Object>> getGamePresentInLibrary(@PathVariable int gameId) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        List<Map<String, Object>> userGameList =  userGameService.checkIfPresentInLibrary(userId, gameId);
+        if(userGameList == null || userGameList.isEmpty()) return List.of();
         return userGameList;
     }
 
+    @PutMapping("/userLibrary")
+    public ResponseEntity<UserGame> updateUser(@RequestBody UserGame userGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        userGame.setUserLibrary(userId);
+        try {
+            return new ResponseEntity<UserGame>(userGameService.update(userGame), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/stats/global")
+    public List<Map<String, Object>> getGlobalStats() {
+        return userGameService.getGlobalLibrary();
+    }
+
+    @GetMapping("/stats/user")
+    public List<Map<String, Object>> getUserStats() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        return userGameService.getUserLibrary(userId);
+    }
+
+    @PostMapping("/addReview")
+    public GameReview postGrameReview(@RequestBody @Valid GameReview gameReview) {
+        return userGameService.addReview(gameReview);
+    }
+
+    @GetMapping("review")
+    public List<Map<String, Object>> getGameReview(@RequestParam("idGame") Integer gameId) {
+        List<Map<String, Object>> gameReviewList = userGameService.getReviewByGame(gameId);
+        return gameReviewList;
+    }
+    @GetMapping("reviewIgdb")
+    public List<Map<String, Object>> getGameReviewByIgdb(@RequestParam("idGame") String gameId) {
+        List<Map<String, Object>> gameReviewList = userGameService.getReviewByGameIgdb(gameId);
+        return gameReviewList;
+    }
+
+    @GetMapping("bestRating")
+    public List<Map<String, Object>> getBestRating() {
+        List<Map<String, Object>> gameBestRateList = gameService.getBestRate();
+        return gameBestRateList;
+    }
+
+    @GetMapping("{idGame}/isWished")
+    public boolean isWishedByUser(@PathVariable int idGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        Game g = gameService.findGameByIgdbId(String.valueOf(idGame));
+        return userGameService.isWishedByUser(userId, g.getId());
+    }
+
+    @PostMapping("addToWishlist/{idGame}")
+    public UserWishlist postWishList(@PathVariable int idGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        Game g = gameService.findGameByIgdbId(String.valueOf(idGame));
+        UserWishlist uw = new UserWishlist(userId, g.getId());
+        return userGameService.postGameToWishList(uw);
+    }
+    @DeleteMapping("/userWishlist/{idGame}")
+    public Integer deleteWish(@PathVariable int idGame){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        Game g = gameService.findGameByIgdbId(String.valueOf(idGame));
+        return userGameService.deleteWish(userId, g.getId());
+    }
+
+    @GetMapping("/wishlist")
+    public List<Map<String, Object>> getWishList(){
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity userLogged = userService.findByUserName(username);
+        int userId = userLogged.getId();
+        return userGameService.getWishList(userId);
+    }
+
+    @GetMapping("/mostFinished")
+    public List<Map<String, Object>> getMostFinished() {
+        return gameService.getMostFinished();
+    }
+
+    @GetMapping("/averagePlaytime")
+    public List<Map<String, Object>> getAveragePlaytime() {
+        return gameService.getAveragePlaytime();
+    }
 
 }

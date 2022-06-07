@@ -25,6 +25,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> getPostsByGameTopicFiltered(int gameTopic) {
+        return postRepository.getPostsByGameTopicFiltered(gameTopic);
+    }
+
+    @Override
     public List<Post> getAuthorPosts(String author) {
         return postRepository.getAuthorPosts(author);
     }

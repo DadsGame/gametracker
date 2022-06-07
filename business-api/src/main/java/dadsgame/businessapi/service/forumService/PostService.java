@@ -9,6 +9,7 @@ public interface PostService {
     public List<Post> getAllPost();
 
     public List<Post> getPostsByGameTopic(int gameTopic);
+    public List<Post> getPostsByGameTopicFiltered(int gameTopic);
 
     public List<Post> getAuthorPosts(String author);
 

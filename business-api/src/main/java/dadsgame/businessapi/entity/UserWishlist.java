@@ -26,4 +26,9 @@ public class UserWishlist {
 
     @Column(name = "id_game")
     private int idGame;
+
+    public UserWishlist(int userId, int idGame) {
+        this.idUser = userId;
+        this.idGame = idGame;
+    }
 }

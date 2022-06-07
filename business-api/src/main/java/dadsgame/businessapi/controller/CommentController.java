@@ -5,6 +5,7 @@ import dadsgame.businessapi.exception.InvalidRequestException;
 import dadsgame.businessapi.exception.NotFoundException;
 import dadsgame.businessapi.service.forumService.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +26,12 @@ public class CommentController {
 
     @PostMapping
     public Comment createComment(@RequestBody @Valid Comment comment) {
+        return commentService.save(comment);
+    }
+    @PostMapping("/currentUser")
+    public Comment createCommentCurrent(@RequestBody @Valid Comment comment) {
+            String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        comment.setAuthor(username);
         return commentService.save(comment);
     }
 

@@ -32,6 +32,8 @@ public class UserGame {
   private double soldAt;
   @Column(name = "status")
   private String status;
+  @Column(name = "platform")
+  private String platform;
   @Column(name = "created_at")
   private java.sql.Timestamp createdAt;
   @Column(name = "playtime")

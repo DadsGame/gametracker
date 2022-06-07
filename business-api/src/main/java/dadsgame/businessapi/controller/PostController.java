@@ -5,6 +5,7 @@ import dadsgame.businessapi.exception.InvalidRequestException;
 import dadsgame.businessapi.exception.NotFoundException;
 import dadsgame.businessapi.service.forumService.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,9 +24,19 @@ public class PostController {
         return postService.getAllPost();
     }
 
+    @GetMapping("/{idPost}")
+    public Optional<Post> getPostById(@PathVariable int idPost) {
+        return postService.findById(idPost);
+    }
+
     @GetMapping("/byGameTopic/{idGameTopic}")
     public List<Post> getPostByGameTopic(@PathVariable int idGameTopic) {
         return postService.getPostsByGameTopic(idGameTopic);
+    }
+
+    @GetMapping("/byGameTopic/filtered/{idGameTopic}")
+    public List<Post> getPostByGameTopicFiltered(@PathVariable int idGameTopic) {
+        return postService.getPostsByGameTopicFiltered(idGameTopic);
     }
 
     @GetMapping("/byAuthor/{author}")
@@ -35,6 +46,13 @@ public class PostController {
 
     @PostMapping
     public Post createPost(@RequestBody @Valid Post post) {
+        return postService.save(post);
+    }
+
+    @PostMapping("/currentUser")
+    public Post createPostCurrent(@RequestBody @Valid Post post) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setAuthor(username);
         return postService.save(post);
     }
 
