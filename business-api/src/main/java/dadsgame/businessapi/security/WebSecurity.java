@@ -23,7 +23,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> {
                     CorsConfiguration cors = new CorsConfiguration();
-                    cors.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:80", "http://localhost:8080"));
+                    cors.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:80", "http://localhost:8080", System.getenv("FRONT_HOST"), System.getenv("APP_HOST")));
                     cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     cors.setAllowedHeaders(List.of("*"));
                     return cors;
