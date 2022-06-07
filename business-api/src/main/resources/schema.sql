@@ -1,26 +1,3 @@
-DROP TABLE IF EXISTS public.user_game CASCADE;
-DROP TABLE IF EXISTS public.game CASCADE;
-DROP TYPE IF EXISTS public.game_status CASCADE;
-DROP TABLE IF EXISTS public.type CASCADE;
-DROP TABLE IF EXISTS public.game_type CASCADE;
-DROP TABLE IF EXISTS public.platform CASCADE;
-DROP TABLE IF EXISTS public.release_date CASCADE;
-DROP TABLE IF EXISTS public.user CASCADE;
-DROP TABLE IF EXISTS public.game_review CASCADE;
-DROP TABLE IF EXISTS public.user_wishlist CASCADE;
-
-DROP TABLE IF EXISTS comment CASCADE;
-DROP TABLE IF EXISTS post CASCADE;
-DROP TABLE IF EXISTS game_topic CASCADE;
-
-CREATE TYPE "game_status" AS ENUM (
-  'not started',
-  'started',
-  'finished',
-  'ragequit',
-  'won''t continue'
-);
-
 CREATE TABLE IF NOT EXISTS "game" (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "name" varchar NOT NULL,
@@ -88,13 +65,13 @@ CREATE TABLE IF NOT EXISTS "user_wishlist" (
     "id_game" int
 );
 
-CREATE TABLE "game_topic"
+CREATE TABLE IF NOT EXISTS "game_topic"
 (
     "id"   int PRIMARY KEY,
     "name" varchar
 );
 
-CREATE TABLE "post"
+CREATE TABLE IF NOT EXISTS "post"
 (
     "id" SERIAL PRIMARY KEY,
     "title" varchar,
@@ -103,7 +80,7 @@ CREATE TABLE "post"
     "id_gametopic" int
 );
 
-CREATE TABLE "comment"
+CREATE TABLE IF NOT EXISTS "comment"
 (
     "id"      SERIAL PRIMARY KEY,
     "author"  varchar,
